@@ -30,9 +30,12 @@
         <h2>Books Available</h2>
         <div class="row">
             {% for item in books %}
-                <div class="col=3">
-                    <h3>{{ item.Title }}</h3>
-                    <img style="aspect-ratio: 3/4; object-fit: cover;" class="img-fluid" src="images/{{item.Cover}}" alt="book cover images">
+                <div class="col-3">
+                    <h4>{{ item.Title }}</h4>
+                    <img 
+                    style="aspect-ratio:3/4; object-fit:cover;" 
+                    class="w-100 img-fluid" 
+                    src="images/{{item.Cover}}">
                 </div>
             {% endfor %}
         </div>

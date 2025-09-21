@@ -1,5 +1,5 @@
 <?php
-namespace Jm\Webproject;
+namespace Sc\Webproject;
 // declare other components used in this class
 use Dotenv;
 use \Exception;

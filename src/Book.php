@@ -11,7 +11,7 @@ class Book extends Database {
     }
     public function getBooks() {
         $query = "
-        SELECT
+        SELECT 
         id,
         Title,
         Author,
@@ -29,7 +29,7 @@ class Book extends Database {
         // create an array to store result
         $books = array();
         // loop through every row in the result
-        while( $row = $result -> fetch_assoc()) {
+        while( $row = $result -> fetch_assoc() ) {
             array_push( $books, $row );
         }
         return $books;

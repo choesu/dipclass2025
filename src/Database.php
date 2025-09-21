@@ -24,7 +24,7 @@ class Database extends App {
                 $this -> host,
                 $this -> user,
                 $this -> password,
-                $this -> name,
+                $this -> name
             );
             if( !$this -> connection ) {
                 throw new Exception("database connection failed");
@@ -34,6 +34,5 @@ class Database extends App {
             echo $e -> getMessage();
         }
     }
-
 }
 ?>
