@@ -29,7 +29,7 @@ class Account extends Database {
         $statement = $this -> connection -> prepare($query);
         $statement -> bind_param("sssss",$email,$hash,$username,$first,$last);
         try {
-            if( $statement -> execute()) {
+            if( !$statement -> execute()) {
                 throw new Exception("Oops! Something went wrong");
             }
             else {
