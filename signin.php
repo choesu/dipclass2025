@@ -7,10 +7,13 @@ use Sc\Webproject\Account;
 // create an app object based on App class
 $app = new App();
 
-$title = "Sign up to UniLibrary";
-$message = "Join our website";
+$title = "Sign in to UniLibrary";
+$message = "Sign in to your account";
 $success = null;
-if( empty($_SESSION["username"])) {
+$response = null;
+$type = null;
+
+if( empty($_SESSION["username"]) ) {
     $user = null;
 }
 else {
@@ -19,25 +22,30 @@ else {
 
 // handle POST request from the signup form
 if( $_SERVER["REQUEST_METHOD"] == "POST" ) {
-    $username = $_POST["username"];
     $email = $_POST["email"];
-    $password1 = $_POST["password"];
-    // $password2 = $_POST["confirm-password"];
-    // initialise Account class
+    $password = $_POST["password"];
+    // authenticate user
     $account = new Account();
-    $signup = $account -> create($email,$password1,$username,"Test","User");
-    // check if signup is successful
-    if( $signup == true ) {
-        // successful
+    $signin = $account -> login($email,$password);
+    // check if signin is successful
+    if( $signin["success"] == true ) {
+        // success
         $success = true;
+        $username = $signin["account"]["Username"];
+        $type = $signin["account"]["Type"];
+
         $_SESSION["email"] = $email;
         $_SESSION["username"] = $username;
-        // update the user variable
-        $user = $_SESSION["username"];
+        $_SESSION["type"] = $type;
+        $_SESSION["account_id"] = $signin["account"]["id"];
+        // // update the user variable
+       $user = $username;
+       $response = $signin["message"];
     }
     else {
         // failed
         $success = false;
+        $response = $signin["message"];
     }
 }
 
@@ -46,12 +54,14 @@ if( $_SERVER["REQUEST_METHOD"] == "POST" ) {
 $loader = new \Twig\Loader\FilesystemLoader('templates');
 $twig = new \Twig\Environment( $loader );
 // load the template into memory
-$template = $twig -> load('signup.html.twig');
+$template = $twig -> load('signin.html.twig');
 // add some variables for twig to render
 echo $template -> render([
     'title' => $title,
     'message' => $message,
     'success' => $success,
-    'user' => $user
+    'user' => $user,
+    'response' => $response,
+    'type' => $type
 ]);
 ?>
