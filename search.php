@@ -20,7 +20,7 @@ if( isset($_GET["query"]) ) {
    // initialise search class
    $search = new Search();
    // call getResults method and pass user keyword
-   $results = $search -> getResults($keyword);
+   $results = $search -> getResualts($keyword);
    foreach( $results as $item ) {
     print_r($item);
     echo "<br>";
