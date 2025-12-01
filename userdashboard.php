@@ -7,13 +7,25 @@ use Sc\Webproject\Loan;
 // create an app object based on App class
 $app = new App();
 
+// variables for the page
 $title = "User Dashboard";
 $message = "User Dashboard";
+$type = null;
+$user = null;
 
 // check if the user is authenticated
 // if not redirect to signin
 if( empty($_SESSION['email']) ) {
     header("location: /signin.php");
+}
+// username
+if( !empty($_SESSION["username"]) ) {
+    $user = $_SESSION["username"];
+}
+
+// user type
+if( !empty($_SESSION["type"] ) ) {
+    $type = $_SESSION["type"];
 }
 // get user loans
 $account_id = $_SESSION["account_id"];
@@ -30,6 +42,8 @@ $template = $twig -> load('userdashboard.html.twig');
 echo $template -> render([
     'title' => $title,
     'message' => $message,
-    'userloans' => $user_loans
+    'userloans' => $user_loans,
+    'type' => $type,
+    'user' => $user
 ]);
 ?>

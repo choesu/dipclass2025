@@ -7,14 +7,22 @@ use Sc\Webproject\Account;
 // create an app object based on App class
 $app = new App();
 
+// variables for the page
 $title = "Sign up to UniLibrary";
 $message = "Join our website";
 $success = null;
-if( empty($_SESSION["username"])) {
-    $user = null;
-}
-else {
+$response = null;
+$type = null;
+$user = null;
+$account_id = null;
+// username
+if( !empty($_SESSION["username"]) ) {
     $user = $_SESSION["username"];
+}
+
+// user type
+if( !empty($_SESSION["type"] ) ) {
+    $type = $_SESSION["type"];
 }
 
 // handle POST request from the signup form
@@ -22,22 +30,26 @@ if( $_SERVER["REQUEST_METHOD"] == "POST" ) {
     $username = $_POST["username"];
     $email = $_POST["email"];
     $password1 = $_POST["password"];
-    // $password2 = $_POST["confirm-password"];
     // initialise Account class
     $account = new Account();
     $signup = $account -> create($email,$password1,$username,"Test","User");
     // check if signup is successful
-    if( $signup == true ) {
-        // successful
+    if( $signup["success"] == true ) {
+        // success
         $success = true;
+        $response = $signup["message"];
         $_SESSION["email"] = $email;
         $_SESSION["username"] = $username;
+        $_SESSION["account_id"] = $signup["account_id"];
+        $_SESSION["type"] = 1;
         // update the user variable
         $user = $_SESSION["username"];
+        $account_id = $signup["account_id"];
     }
     else {
         // failed
         $success = false;
+        $response = $signup["message"];
     }
 }
 
@@ -52,6 +64,9 @@ echo $template -> render([
     'title' => $title,
     'message' => $message,
     'success' => $success,
-    'user' => $user
+    'response' => $response,
+    'user' => $user,
+    'type' => $type,
+    'account_id' => $account_id
 ]);
 ?>
