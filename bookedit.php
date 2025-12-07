@@ -1,8 +1,8 @@
 <?php
 require('vendor/autoload.php');
 
-use Jm\Webproject\App;
-use Jm\Webproject\Book;
+use Sc\Webproject\App;
+use Sc\Webproject\Book;
 
 $app = new App();
 $book = new Book();
